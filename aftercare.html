@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Djack – Aftercare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #ffffff;
+            line-height: 1.7;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(1.5px 1.5px at 10% 15%, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1.5px 1.5px at 25% 40%, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1.5px 1.5px at 40% 8%, rgba(255, 255, 255, 0.5), transparent),
+                radial-gradient(1.5px 1.5px at 55% 65%, rgba(255, 255, 255, 0.2), transparent),
+                radial-gradient(1.5px 1.5px at 70% 25%, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1.5px 1.5px at 85% 75%, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1.5px 1.5px at 15% 85%, rgba(255, 255, 255, 0.25), transparent),
+                radial-gradient(1.5px 1.5px at 50% 50%, rgba(255, 255, 255, 0.15), transparent),
+                radial-gradient(1.5px 1.5px at 65% 12%, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1.5px 1.5px at 90% 50%, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1.5px 1.5px at 5% 55%, rgba(255, 255, 255, 0.25), transparent),
+                radial-gradient(1.5px 1.5px at 75% 88%, rgba(255, 255, 255, 0.2), transparent),
+                radial-gradient(2px 2px at 20% 45%, rgba(245, 158, 11, 0.3), transparent),
+                radial-gradient(2px 2px at 60% 35%, rgba(245, 158, 11, 0.25), transparent),
+                radial-gradient(2px 2px at 80% 65%, rgba(245, 158, 11, 0.3), transparent),
+                radial-gradient(2px 2px at 30% 90%, rgba(245, 158, 11, 0.2), transparent),
+                radial-gradient(2px 2px at 70% 10%, rgba(245, 158, 11, 0.25), transparent),
+                radial-gradient(2px 2px at 50% 70%, rgba(245, 158, 11, 0.2), transparent);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+            transition: all 0.3s;
+        }
+        .header.scrolled {
+            padding: 12px 0;
+            background: rgba(15, 23, 42, 0.98);
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo a {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        .logo a span {
+            color: #f59e0b;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .nav a {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            transition: width 0.3s;
+        }
+        .nav a:hover::after,
+        .nav a.active::after {
+            width: 100%;
+        }
+        .nav a:hover {
+            color: #f59e0b;
+        }
+        .nav-cta {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a !important;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-weight: 600 !important;
+            transition: all 0.3s;
+        }
+        .nav-cta::after {
+            display: none !important;
+        }
+        .nav-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+            color: #0f172a !important;
+        }
+
+        /* ===== HAMBURGER ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 2.5px;
+            background: #f59e0b;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ===== MOBILE NAV ===== */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(12px);
+            padding: 100px 24px 40px;
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+        .mobile-nav.active {
+            display: flex;
+        }
+        .mobile-nav a {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            transition: color 0.3s;
+        }
+        .mobile-nav a:hover {
+            color: #f59e0b;
+        }
+        .mobile-nav .nav-cta-mobile {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a !important;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-weight: 600 !important;
+        }
+
+        /* ===== PAGE HERO ===== */
+        .page-hero {
+            padding: 140px 0 60px;
+            text-align: center;
+            background: transparent;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.06);
+        }
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+        .page-hero h1 span {
+            color: #f59e0b;
+            font-style: italic;
+        }
+        .page-sub {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* ===== AFTERCARE ===== */
+        .aftercare-page {
+            padding: 60px 0 80px;
+            background: transparent;
+        }
+        .aftercare-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto 60px;
+        }
+        .aftercare-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(245, 158, 11, 0.06);
+            transition: all 0.4s;
+        }
+        .aftercare-card:hover {
+            background: rgba(245, 158, 11, 0.05);
+            transform: translateY(-6px);
+            border-color: rgba(245, 158, 11, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .aftercare-card .step-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: rgba(245, 158, 11, 0.3);
+            letter-spacing: 3px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .aftercare-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        .aftercare-card p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.8;
+        }
+        .aftercare-card .tip {
+            display: block;
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: rgba(245, 158, 11, 0.06);
+            border-left: 3px solid #f59e0b;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+        .aftercare-card .tip i {
+            color: #f59e0b;
+            margin-right: 8px;
+        }
+
+        /* ===== CONTACT ===== */
+        .aftercare-contact {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 48px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(245, 158, 11, 0.06);
+        }
+        .aftercare-contact h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+        .aftercare-contact h2 span {
+            color: #f59e0b;
+        }
+        .aftercare-contact p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+        .aftercare-contact a {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+            padding: 16px 48px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.15);
+        }
+        .aftercare-contact a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 32px 0;
+            background: rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(245, 158, 11, 0.06);
+        }
+        .footer a {
+            color: #f59e0b;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .aftercare-grid {
+                grid-template-columns: 1fr;
+            }
+            .aftercare-contact {
+                padding: 32px 20px;
+            }
+            .aftercare-contact h2 {
+                font-size: 1.6rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .page-hero h1 {
+                font-size: 2.2rem;
+            }
+            .page-sub {
+                font-size: 0.95rem;
+            }
+            .aftercare-card {
+                padding: 24px;
+            }
+            .aftercare-card h3 {
+                font-size: 1.2rem;
+            }
+            .aftercare-contact {
+                padding: 24px 16px;
+            }
+            .aftercare-contact h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header" id="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">D<span>jack</span></a>
+            </div>
+            <nav class="nav">
+                <a href="gallery.html">Gallery</a>
+                <a href="booking.html" class="nav-cta">Book a session</a>
+            </nav>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html" class="nav-cta-mobile">Book a session</a>
+        <a href="aftercare.html">Aftercare</a>
+    </div>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1>Heal it <span>right.</span></h1>
+            <p class="page-sub">Your tattoo is an investment — take care of it properly.<br />Follow these steps for the first 3–4 weeks and your ink will settle beautifully.</p>
+        </div>
+    </section>
+
+    <section class="aftercare-page">
+        <div class="container">
+            <div class="aftercare-grid">
+
+                <div class="aftercare-card">
+                    <span class="step-number">01</span>
+                    <h3>Keep it wrapped</h3>
+                    <p>Leave the protective film on for <strong>2–4 hours</strong> after your session. This allows the initial plasma and ink to settle without exposing the fresh wound to bacteria.</p>
+                    <p style="margin-top:8px;">When it's time, peel it off <strong>gently under lukewarm running water</strong> — never rip it off dry.</p>
+                    <span class="tip"><i class="fas fa-lightbulb"></i> Tip: If your artist uses second-skin bandage, leave it on for 3–5 days as instructed.</span>
+                </div>
+
+                <div class="aftercare-card">
+                    <span class="step-number">02</span>
+                    <h3>Wash gently</h3>
+                    <p>Use <strong>lukewarm water</strong> and a <strong>fragrance-free, mild soap</strong> (like unscented Castile or baby soap). Wash twice a day — morning and night.</p>
+                    <p style="margin-top:8px;">Use your fingertips to gently remove any excess ink, plasma, or debris. <strong>Never use a washcloth or sponge</strong> — they harbor bacteria and can irritate the skin.</p>
+                    <span class="tip"><i class="fas fa-lightbulb"></i> Tip: Pat dry with a clean paper towel — never rub or wipe.</span>
+                </div>
+
+                <div class="aftercare-card">
+                    <span class="step-number">03</span>
+                    <h3>Moisturize daily</h3>
+                    <p>Apply a <strong>thin, even layer</strong> of unscented tattoo balm or moisturizer 2–3 times a day for the first two weeks. Less is more — you don't want to suffocate the skin.</p>
+                    <p style="margin-top:8px;">After the first two weeks, switch to a fragrance-free lotion to keep the skin hydrated as it continues to heal beneath the surface.</p>
+                    <span class="tip"><i class="fas fa-lightbulb"></i> Tip: Use products specifically made for tattoos — avoid petroleum-based ointments like Vaseline.</span>
+                </div>
+
+                <div class="aftercare-card">
+                    <span class="step-number">04</span>
+                    <h3>Avoid sun & water</h3>
+                    <p><strong>No pools, oceans, lakes, or saunas</strong> for at least 3 weeks. The chemicals, salt, and bacteria can cause serious infections and ruin the healing process.</p>
+                    <p style="margin-top:8px;">Keep your tattoo <strong>out of direct sunlight</strong> for the first month. Once healed, always apply <strong>SPF 50+</strong> to protect the colors and lines from fading.</p>
+                    <span class="tip"><i class="fas fa-lightbulb"></i> Tip: When showering, let water run over the tattoo — don't spray it directly.</span>
+                </div>
+
+                <div class="aftercare-card">
+                    <span class="step-number">05</span>
+                    <h3>Don't pick or scratch</h3>
+                    <p>It's completely normal for your tattoo to <strong>itch, peel, and flake</strong> — this is part of the healing process. <strong>Do not scratch, pick, or rub</strong> the area.</p>
+                    <p style="margin-top:8px;">Scratching can <strong>pull out pigment</strong>, create scars, and leave permanent blank spots in your design. If it itches, <strong>pat it gently</strong> with a clean hand.</p>
+                    <span class="tip"><i class="fas fa-lightbulb"></i> Tip: Keep your nails short and clean to avoid accidental scratching while sleeping.</span>
+                </div>
+
+                <div class="aftercare-card">
+                    <span class="step-number">06</span>
+                    <h3>Touch-up policy</h3>
+                    <p>I stand behind my work. If your tattoo needs a touch-up due to fading, uneven ink, or minor imperfections, <strong>one free touch-up is included</strong> within <strong>90 days</strong> of your session.</p>
+                    <p style="margin-top:8px;">Just send me a photo and we'll schedule a quick session to perfect your piece. After 90 days, a small fee may apply depending on the size and complexity.</p>
+                    <span class="tip"><i class="fas fa-lightbulb"></i> Tip: Touch-ups are best done after the tattoo is fully healed — usually 4–6 weeks post-session.</span>
+                </div>
+
+            </div>
+
+            <div class="aftercare-contact">
+                <h2>IF ANYTHING FEELS <span>OFF</span></h2>
+                <p>Don't hesitate to reach out. I'd rather hear from you early than worry quietly.</p>
+                <a href="booking.html">Book a session →</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Djack. All rights reserved. | <a href="mailto:djackstudio@gmail.com">djackstudio@gmail.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        const body = document.body;
+        const header = document.getElementById('header');
+
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        });
+
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                body.style.overflow = '';
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (mobileNav.classList.contains('active') &&
+                !mobileNav.contains(e.target) &&
+                !hamburger.contains(e.target)) {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                body.style.overflow = '';
+            }
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
