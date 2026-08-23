@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
+        /* ===== ALL YOUR EXISTING STYLES GO HERE (SAME AS BEFORE) ===== */
         * {
             margin: 0;
             padding: 0;
@@ -541,6 +542,7 @@
             margin-bottom: 24px;
         }
 
+        /* ===== FORM SUBMIT BUTTON ===== */
         .btn-primary {
             background: linear-gradient(135deg, #f59e0b, #d97706);
             color: #0f172a;
@@ -675,135 +677,147 @@
 
     <section class="booking-page">
         <div class="container">
-            <div class="booking-grid">
-                <div class="booking-step">
-                    <span class="step-number">01</span>
-                    <h3>You</h3>
-                    <div class="form-group">
-                        <label>FULL NAME</label>
-                        <input type="text" id="clientName" placeholder="Jane Doe" />
-                    </div>
-                    <div class="form-group">
-                        <label>EMAIL</label>
-                        <input type="email" id="clientEmail" placeholder="jane@example.com" />
-                    </div>
-                    <div class="form-group">
-                        <label>PHONE</label>
-                        <input type="tel" id="clientPhone" placeholder="+1 949-439-8195" />
-                    </div>
-                </div>
 
-                <div class="booking-step">
-                    <span class="step-number">02</span>
-                    <h3>Your appointment</h3>
-                    <div class="form-group">
-                        <label>PLACEMENT</label>
-                        <div class="placement-grid">
-                            <button class="placement-btn" data-value="Forearm">Forearm</button>
-                            <button class="placement-btn" data-value="Upper arm">Upper arm</button>
-                            <button class="placement-btn" data-value="Chest">Chest</button>
-                            <button class="placement-btn" data-value="Back">Back</button>
-                            <button class="placement-btn" data-value="Leg">Leg</button>
-                            <button class="placement-btn" data-value="Neck">Neck</button>
-                            <button class="placement-btn" data-value="Ribcage">Ribcage</button>
-                            <button class="placement-btn" data-value="Hand/finger">Hand/finger</button>
-                            <button class="placement-btn" data-value="Foot/ankle">Foot/ankle</button>
+            <!-- ===== BOOKING FORM (WITH FORMSPREE) ===== -->
+            <form id="bookingForm" action="https://formspree.io/f/mdenvygn" method="POST">
+
+                <div class="booking-grid">
+                    <div class="booking-step">
+                        <span class="step-number">01</span>
+                        <h3>You</h3>
+                        <div class="form-group">
+                            <label>FULL NAME</label>
+                            <input type="text" id="clientName" name="name" placeholder="Jane Doe" required />
                         </div>
-                        <input type="hidden" id="selectedPlacement" value="" />
+                        <div class="form-group">
+                            <label>EMAIL</label>
+                            <input type="email" id="clientEmail" name="email" placeholder="jane@example.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label>PHONE</label>
+                            <input type="tel" id="clientPhone" name="phone" placeholder="+1 949-439-8195" />
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>APPROXIMATE SIZE</label>
-                        <select id="tattooSize">
-                            <option value="">Select a size</option>
-                            <option value="Small (2-4 inches)">Small (2-4 inches)</option>
-                            <option value="Medium (4-8 inches)">Medium (4-8 inches)</option>
-                            <option value="Large (8-12 inches)">Large (8-12 inches)</option>
-                            <option value="XL (12+ inches)">XL (12+ inches)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>PREFERRED DATE</label>
-                        <input type="date" id="preferredDate" />
-                    </div>
-                    <div class="form-group">
-                        <label>QUICK RECAP OF YOUR IDEA</label>
-                        <textarea id="ideaRecap" rows="3" placeholder="A short summary of what we already discussed..."></textarea>
-                    </div>
-                </div>
-            </div>
 
-            <div class="deposit-section">
-                <h2>Secure your spot with <span>full payment</span></h2>
-                <p class="deposit-desc">
-                    To secure your appointment, <strong>full payment</strong> is required at the time of booking. This confirms your commitment and covers the time, preparation, and custom design work that goes into your piece.
-                </p>
-                <p class="deposit-desc" style="margin-top:-10px;">
-                    <strong>All payments are non-refundable</strong>. In the event of a cancellation or rescheduling with less than <strong>48 hours' notice</strong>, the full payment is forfeited to compensate for the lost time and work already put into your design.
-                </p>
-                <div class="deposit-note">
-                    <i class="fas fa-exclamation-circle"></i> Please be sure of your availability before booking — all payments are final.
-                </div>
-                <div class="deposit-note-case">
-                    <i class="fas fa-hand-holding-heart"></i> Refunds may be considered on a case-by-case basis depending on the customer's situation and at the studio's discretion.
-                </div>
-            </div>
-
-            <div class="deposit-section" style="margin-top:-20px;">
-                <div class="payment-methods">
-                    <label>PREFERRED PAYMENT METHOD</label>
-                    <div class="payment-grid">
-                        <button class="payment-btn" data-value="Zelle">Zelle</button>
-                        <button class="payment-btn" data-value="Apple Pay">Apple Pay</button>
-                        <button class="payment-btn" data-value="PayPal">PayPal</button>
-                        <button class="payment-btn" data-value="Chime">Chime</button>
-                        <button class="payment-btn" data-value="Bitcoin">Bitcoin</button>
-                        <button class="payment-btn" data-value="Venmo">Venmo</button>
-                        <button class="payment-btn" data-value="CashApp">CashApp</button>
-                        <button class="payment-btn" data-value="Apple Gift Card">Apple Gift Card</button>
-                    </div>
-                    <input type="hidden" id="selectedPayment" value="" />
-                </div>
-            </div>
-
-            <div class="terms-section">
-                <h2>Studio <span>Terms</span></h2>
-                <p class="terms-sub">Djack — quick terms.</p>
-                <div class="terms-content">
-                    <ol>
-                        <li>
-                            <strong>Payment.</strong> Full payment is required to secure your appointment. All payments are non-refundable. Cancellations with less than 48 hours' notice will result in forfeiture of the full payment.
-                        </li>
-                        <li style="margin-top:12px;">
-                            <strong>Refunds.</strong> Refunds may be considered on a case-by-case basis at the studio's discretion, depending on the customer's situation.
-                        </li>
-                        <li style="margin-top:12px;">
-                            <strong>Design Changes.</strong> Any major design changes must be discussed at least 72 hours before your session. Last-minute changes may require rescheduling.
-                        </li>
-                        <li style="margin-top:12px;">
-                            <strong>Touch-ups.</strong> One free touch-up is included within 90 days of your session for any minor adjustments or fading.
-                        </li>
-                    </ol>
-                    <div class="terms-checkbox">
-                        <input type="checkbox" id="agreeTerms" />
-                        <label for="agreeTerms">I agree to the studio terms and confirm my info is accurate.</label>
+                    <div class="booking-step">
+                        <span class="step-number">02</span>
+                        <h3>Your appointment</h3>
+                        <div class="form-group">
+                            <label>PLACEMENT</label>
+                            <div class="placement-grid">
+                                <button type="button" class="placement-btn" data-value="Forearm">Forearm</button>
+                                <button type="button" class="placement-btn" data-value="Upper arm">Upper arm</button>
+                                <button type="button" class="placement-btn" data-value="Chest">Chest</button>
+                                <button type="button" class="placement-btn" data-value="Back">Back</button>
+                                <button type="button" class="placement-btn" data-value="Leg">Leg</button>
+                                <button type="button" class="placement-btn" data-value="Neck">Neck</button>
+                                <button type="button" class="placement-btn" data-value="Ribcage">Ribcage</button>
+                                <button type="button" class="placement-btn" data-value="Hand/finger">Hand/finger</button>
+                                <button type="button" class="placement-btn" data-value="Foot/ankle">Foot/ankle</button>
+                            </div>
+                            <input type="hidden" id="selectedPlacement" name="placement" value="" />
+                        </div>
+                        <div class="form-group">
+                            <label>APPROXIMATE SIZE</label>
+                            <select id="tattooSize" name="size">
+                                <option value="">Select a size</option>
+                                <option value="Small (2-4 inches)">Small (2-4 inches)</option>
+                                <option value="Medium (4-8 inches)">Medium (4-8 inches)</option>
+                                <option value="Large (8-12 inches)">Large (8-12 inches)</option>
+                                <option value="XL (12+ inches)">XL (12+ inches)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>PREFERRED DATE</label>
+                            <input type="date" id="preferredDate" name="date" />
+                        </div>
+                        <div class="form-group">
+                            <label>QUICK RECAP OF YOUR IDEA</label>
+                            <textarea id="ideaRecap" name="recap" rows="3" placeholder="A short summary of what we already discussed..."></textarea>
+                        </div>
                     </div>
                 </div>
 
-                <div class="signature-area">
-                    <label>SIGN HERE</label>
-                    <p class="signature-hint">Sign with mouse, trackpad or finger.</p>
-                    <div class="signature-pad">
-                        <canvas id="signatureCanvas"></canvas>
-                        <button class="btn-clear" id="clearSignature">CLEAR</button>
+                <div class="deposit-section">
+                    <h2>Secure your spot with <span>full payment</span></h2>
+                    <p class="deposit-desc">
+                        To secure your appointment, <strong>full payment</strong> is required at the time of booking. This confirms your commitment and covers the time, preparation, and custom design work that goes into your piece.
+                    </p>
+                    <p class="deposit-desc" style="margin-top:-10px;">
+                        <strong>All payments are non-refundable</strong>. In the event of a cancellation or rescheduling with less than <strong>48 hours' notice</strong>, the full payment is forfeited to compensate for the lost time and work already put into your design.
+                    </p>
+                    <div class="deposit-note">
+                        <i class="fas fa-exclamation-circle"></i> Please be sure of your availability before booking — all payments are final.
+                    </div>
+                    <div class="deposit-note-case">
+                        <i class="fas fa-hand-holding-heart"></i> Refunds may be considered on a case-by-case basis depending on the customer's situation and at the studio's discretion.
                     </div>
                 </div>
 
-                <p class="response-note">I'll reach out within 48 hours to confirm your booking.</p>
+                <div class="deposit-section" style="margin-top:-20px;">
+                    <div class="payment-methods">
+                        <label>PREFERRED PAYMENT METHOD</label>
+                        <div class="payment-grid">
+                            <button type="button" class="payment-btn" data-value="Zelle">Zelle</button>
+                            <button type="button" class="payment-btn" data-value="Apple Pay">Apple Pay</button>
+                            <button type="button" class="payment-btn" data-value="PayPal">PayPal</button>
+                            <button type="button" class="payment-btn" data-value="Chime">Chime</button>
+                            <button type="button" class="payment-btn" data-value="Bitcoin">Bitcoin</button>
+                            <button type="button" class="payment-btn" data-value="Venmo">Venmo</button>
+                            <button type="button" class="payment-btn" data-value="CashApp">CashApp</button>
+                            <button type="button" class="payment-btn" data-value="Apple Gift Card">Apple Gift Card</button>
+                        </div>
+                        <input type="hidden" id="selectedPayment" name="payment_method" value="" />
+                    </div>
+                </div>
 
-                <button class="btn-primary" id="confirmBooking">
-                    <i class="fas fa-envelope"></i> Confirm via Email →
-                </button>
-            </div>
+                <div class="terms-section">
+                    <h2>Studio <span>Terms</span></h2>
+                    <p class="terms-sub">Djack — quick terms.</p>
+                    <div class="terms-content">
+                        <ol>
+                            <li>
+                                <strong>Payment.</strong> Full payment is required to secure your appointment. All payments are non-refundable. Cancellations with less than 48 hours' notice will result in forfeiture of the full payment.
+                            </li>
+                            <li style="margin-top:12px;">
+                                <strong>Refunds.</strong> Refunds may be considered on a case-by-case basis at the studio's discretion, depending on the customer's situation.
+                            </li>
+                            <li style="margin-top:12px;">
+                                <strong>Design Changes.</strong> Any major design changes must be discussed at least 72 hours before your session. Last-minute changes may require rescheduling.
+                            </li>
+                            <li style="margin-top:12px;">
+                                <strong>Touch-ups.</strong> One free touch-up is included within 90 days of your session for any minor adjustments or fading.
+                            </li>
+                        </ol>
+                        <div class="terms-checkbox">
+                            <input type="checkbox" id="agreeTerms" required />
+                            <label for="agreeTerms">I agree to the studio terms and confirm my info is accurate.</label>
+                        </div>
+                    </div>
+
+                    <div class="signature-area">
+                        <label>SIGN HERE</label>
+                        <p class="signature-hint">Sign with mouse, trackpad or finger.</p>
+                        <div class="signature-pad">
+                            <canvas id="signatureCanvas"></canvas>
+                            <button type="button" class="btn-clear" id="clearSignature">CLEAR</button>
+                        </div>
+                    </div>
+
+                    <p class="response-note">I'll reach out within 48 hours to confirm your booking.</p>
+
+                    <button type="submit" class="btn-primary" id="confirmBooking">
+                        <i class="fas fa-envelope"></i> Confirm via Email →
+                    </button>
+                </div>
+
+                <!-- ===== FORMSPREE HONEYPOT (SPAM PROTECTION) ===== -->
+                <input type="text" name="_gotcha" style="display:none" />
+
+                <!-- ===== REDIRECT AFTER SUBMIT ===== -->
+                <input type="hidden" name="_next" value="https://hamzatabduullahi-star.github.io/djack-studio/thankyou.html" />
+
+            </form>
         </div>
     </section>
 
@@ -975,55 +989,9 @@
             if (agreeTerms) {
                 agreeTerms.addEventListener('change', checkSignature);
             }
-
-            // ===== CONFIRM BOOKING → GMAIL (FIXED FORMATTING) =====
-            const confirmBtn = document.getElementById('confirmBooking');
-            if (confirmBtn) {
-                confirmBtn.addEventListener('click', function() {
-                    if (!this.classList.contains('active')) return;
-
-                    const name = document.getElementById('clientName')?.value.trim() || 'Not provided';
-                    const email = document.getElementById('clientEmail')?.value.trim() || 'Not provided';
-                    const phone = document.getElementById('clientPhone')?.value.trim() || 'Not provided';
-                    const placement = document.getElementById('selectedPlacement')?.value || 'Not specified';
-                    const size = document.getElementById('tattooSize')?.value || 'Not specified';
-                    const date = document.getElementById('preferredDate')?.value || 'Not specified';
-                    const recap = document.getElementById('ideaRecap')?.value.trim() || 'No details provided';
-                    const payment = document.getElementById('selectedPayment')?.value || 'Not specified';
-
-                    const subject = `New Booking Request - Djack Studio`;
-
-                    // Build clean email body with proper formatting
-                    const body = 
-            `✅ FINAL BOOKING CONFIRMATION - Djack
-
-            📝 CLIENT DETAILS:
-            Name: ${name}
-            Email: ${email}
-            Phone: ${phone}
-
-            🎨 APPOINTMENT DETAILS:
-            Placement: ${placement}
-            Size: ${size}
-            Preferred Date: ${date}
-
-            💡 Idea Recap:
-            ${recap}
-
-            💳 Payment Method: ${payment}
-            ✍️ Signature: [Drawn on website]
-
-            💰 Payment: Full payment required (non-refundable)
-            ⏰ 48-hour cancellation policy applies.
-
-            Please confirm availability and send payment details. Thanks!`;
-
-                    window.location.href = `mailto:almightydjack@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                });
-            }
         }
 
-        console.log('🔥 Djack booking page loaded!');
+        console.log('🔥 Djack booking page loaded with Formspree!');
     </script>
 </body>
 </html>
