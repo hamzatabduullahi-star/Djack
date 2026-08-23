@@ -324,6 +324,7 @@
             color: #f59e0b;
         }
 
+        /* ===== DEPOSIT SECTION (FULL PAYMENT - NO REFUNDS) ===== */
         .deposit-section {
             max-width: 800px;
             margin: 0 auto 60px;
@@ -366,6 +367,21 @@
         }
         .deposit-note i {
             color: #f59e0b;
+            margin-right: 8px;
+        }
+        .deposit-note-case {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-style: italic;
+            padding: 12px 20px;
+            background: rgba(245, 158, 11, 0.05);
+            border-radius: 8px;
+            display: inline-block;
+            border-left: 3px solid #d97706;
+            margin-top: 12px;
+        }
+        .deposit-note-case i {
+            color: #d97706;
             margin-right: 8px;
         }
 
@@ -717,19 +733,24 @@
                 </div>
             </div>
 
+            <!-- ===== DEPOSIT SECTION (FULL PAYMENT - NO REFUNDS) ===== -->
             <div class="deposit-section">
-                <h2>Secure your spot with a <span>50% deposit</span></h2>
+                <h2>Secure your spot with <span>full payment</span></h2>
                 <p class="deposit-desc">
-                    To secure your appointment, a <strong>50% non-refundable deposit</strong> is required at the time of booking. This deposit confirms your commitment and covers the time, preparation, and custom design work that goes into your piece.
+                    To secure your appointment, <strong>full payment</strong> is required at the time of booking. This confirms your commitment and covers the time, preparation, and custom design work that goes into your piece.
                 </p>
                 <p class="deposit-desc" style="margin-top:-10px;">
-                    The deposit will be credited toward your final balance. In the event of a cancellation or rescheduling with less than <strong>48 hours' notice</strong>, the deposit is forfeited to compensate for the lost time and work already put into your design.
+                    <strong>All payments are non-refundable</strong>. In the event of a cancellation or rescheduling with less than <strong>48 hours' notice</strong>, the full payment is forfeited to compensate for the lost time and work already put into your design.
                 </p>
                 <div class="deposit-note">
-                    <i class="fas fa-exclamation-circle"></i> Please be sure of your availability before booking — this deposit is non-refundable.
+                    <i class="fas fa-exclamation-circle"></i> Please be sure of your availability before booking — all payments are final.
+                </div>
+                <div class="deposit-note-case">
+                    <i class="fas fa-hand-holding-heart"></i> Refunds may be considered on a case-by-case basis depending on the customer's situation and at the studio's discretion.
                 </div>
             </div>
 
+            <!-- ===== PAYMENT METHODS ===== -->
             <div class="deposit-section" style="margin-top:-20px;">
                 <div class="payment-methods">
                     <label>PREFERRED PAYMENT METHOD</label>
@@ -744,16 +765,20 @@
                 </div>
             </div>
 
+            <!-- ===== TERMS & SIGNATURE ===== -->
             <div class="terms-section">
                 <h2>Studio <span>Terms</span></h2>
                 <p class="terms-sub">Djack — quick terms.</p>
                 <div class="terms-content">
                     <ol>
                         <li>
-                            <strong>Deposit.</strong> A 50% non-refundable deposit is required to secure your appointment. This deposit will be credited toward your final cost. Cancellations with less than 48 hours' notice will result in forfeiture of the deposit.
+                            <strong>Payment.</strong> Full payment is required to secure your appointment. All payments are non-refundable. Cancellations with less than 48 hours' notice will result in forfeiture of the full payment.
                         </li>
                         <li style="margin-top:12px;">
-                            <strong>Design Changes.</strong> Any major design changes must be discussed at least 72 hours before your session. Last-minute changes may require rescheduling and a new deposit.
+                            <strong>Refunds.</strong> Refunds may be considered on a case-by-case basis at the studio's discretion, depending on the customer's situation.
+                        </li>
+                        <li style="margin-top:12px;">
+                            <strong>Design Changes.</strong> Any major design changes must be discussed at least 72 hours before your session. Last-minute changes may require rescheduling.
                         </li>
                         <li style="margin-top:12px;">
                             <strong>Touch-ups.</strong> One free touch-up is included within 90 days of your session for any minor adjustments or fading.
@@ -790,7 +815,7 @@
     </footer>
 
     <script>
-        // Hamburger menu
+        // ===== HAMBURGER MENU =====
         const hamburger = document.getElementById('hamburger');
         const mobileNav = document.getElementById('mobileNav');
         const body = document.body;
@@ -829,7 +854,7 @@
             }
         });
 
-        // Placement buttons
+        // ===== PLACEMENT BUTTONS =====
         const placementBtns = document.querySelectorAll('.placement-btn');
         const selectedPlacement = document.getElementById('selectedPlacement');
 
@@ -843,7 +868,7 @@
             });
         });
 
-        // Payment method buttons
+        // ===== PAYMENT METHOD BUTTONS =====
         const paymentBtns = document.querySelectorAll('.payment-btn');
         const selectedPayment = document.getElementById('selectedPayment');
 
@@ -857,7 +882,7 @@
             });
         });
 
-        // Signature pad
+        // ===== SIGNATURE PAD =====
         const canvas = document.getElementById('signatureCanvas');
         if (canvas) {
             const ctx = canvas.getContext('2d');
@@ -980,7 +1005,7 @@
                         `💡 Idea Recap:%0A${recap}%0A%0A` +
                         `💳 Payment Method: ${payment}%0A` +
                         `✍️ Signature: [Drawn on website]%0A%0A` +
-                        `💰 Deposit: 50% non-refundable required%0A` +
+                        `💰 Payment: Full payment required (non-refundable)%0A` +
                         `⏰ 48-hour cancellation policy applies.%0A%0A` +
                         `Please confirm availability and send payment details. Thanks!`;
 
