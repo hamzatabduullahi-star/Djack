@@ -324,7 +324,6 @@
             color: #f59e0b;
         }
 
-        /* ===== DEPOSIT SECTION (FULL PAYMENT - NO REFUNDS) ===== */
         .deposit-section {
             max-width: 800px;
             margin: 0 auto 60px;
@@ -385,7 +384,6 @@
             margin-right: 8px;
         }
 
-        /* ===== PAYMENT METHODS (UPDATED) ===== */
         .payment-methods {
             text-align: left;
         }
@@ -734,7 +732,6 @@
                 </div>
             </div>
 
-            <!-- ===== DEPOSIT SECTION (FULL PAYMENT - NO REFUNDS) ===== -->
             <div class="deposit-section">
                 <h2>Secure your spot with <span>full payment</span></h2>
                 <p class="deposit-desc">
@@ -751,7 +748,6 @@
                 </div>
             </div>
 
-            <!-- ===== PAYMENT METHODS (UPDATED) ===== -->
             <div class="deposit-section" style="margin-top:-20px;">
                 <div class="payment-methods">
                     <label>PREFERRED PAYMENT METHOD</label>
@@ -769,7 +765,6 @@
                 </div>
             </div>
 
-            <!-- ===== TERMS & SIGNATURE ===== -->
             <div class="terms-section">
                 <h2>Studio <span>Terms</span></h2>
                 <p class="terms-sub">Djack — quick terms.</p>
@@ -981,7 +976,7 @@
                 agreeTerms.addEventListener('change', checkSignature);
             }
 
-            // ===== CONFIRM BOOKING → GMAIL =====
+            // ===== CONFIRM BOOKING → GMAIL (FIXED FORMATTING) =====
             const confirmBtn = document.getElementById('confirmBooking');
             if (confirmBtn) {
                 confirmBtn.addEventListener('click', function() {
@@ -997,21 +992,31 @@
                     const payment = document.getElementById('selectedPayment')?.value || 'Not specified';
 
                     const subject = `New Booking Request - Djack Studio`;
-                    const body = `✅ FINAL BOOKING CONFIRMATION - Djack%0A%0A` +
-                        `📝 CLIENT DETAILS:%0A` +
-                        `Name: ${name}%0A` +
-                        `Email: ${email}%0A` +
-                        `Phone: ${phone}%0A%0A` +
-                        `🎨 APPOINTMENT DETAILS:%0A` +
-                        `Placement: ${placement}%0A` +
-                        `Size: ${size}%0A` +
-                        `Preferred Date: ${date}%0A%0A` +
-                        `💡 Idea Recap:%0A${recap}%0A%0A` +
-                        `💳 Payment Method: ${payment}%0A` +
-                        `✍️ Signature: [Drawn on website]%0A%0A` +
-                        `💰 Payment: Full payment required (non-refundable)%0A` +
-                        `⏰ 48-hour cancellation policy applies.%0A%0A` +
-                        `Please confirm availability and send payment details. Thanks!`;
+
+                    // ===== CLEAN EMAIL BODY WITH PROPER LINE BREAKS =====
+                    const body = 
+            `✅ FINAL BOOKING CONFIRMATION - Djack
+
+            📝 CLIENT DETAILS:
+            Name: ${name}
+            Email: ${email}
+            Phone: ${phone}
+
+            🎨 APPOINTMENT DETAILS:
+            Placement: ${placement}
+            Size: ${size}
+            Preferred Date: ${date}
+
+            💡 Idea Recap:
+            ${recap}
+
+            💳 Payment Method: ${payment}
+            ✍️ Signature: [Drawn on website]
+
+            💰 Payment: Full payment required (non-refundable)
+            ⏰ 48-hour cancellation policy applies.
+
+            Please confirm availability and send payment details. Thanks!`;
 
                     window.location.href = `mailto:almightydjack@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                 });
