@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+
     <style>
-        /* ===== ALL YOUR EXISTING STYLES GO HERE (SAME AS BEFORE) ===== */
         * {
             margin: 0;
             padding: 0;
@@ -56,6 +59,7 @@
             color: inherit;
         }
 
+        /* ===== HEADER ===== */
         .header {
             position: fixed;
             top: 0;
@@ -542,7 +546,6 @@
             margin-bottom: 24px;
         }
 
-        /* ===== FORM SUBMIT BUTTON ===== */
         .btn-primary {
             background: linear-gradient(135deg, #f59e0b, #d97706);
             color: #0f172a;
@@ -587,6 +590,32 @@
         }
         .footer a {
             color: #f59e0b;
+        }
+
+        /* ===== SUCCESS MESSAGE ===== */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            max-width: 600px;
+            margin: 40px auto;
+        }
+        .success-message i {
+            font-size: 4rem;
+            color: #f59e0b;
+            margin-bottom: 16px;
+        }
+        .success-message h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+        .success-message p {
+            color: rgba(255, 255, 255, 0.5);
         }
 
         @media (max-width: 768px) {
@@ -678,9 +707,8 @@
     <section class="booking-page">
         <div class="container">
 
-            <!-- ===== BOOKING FORM (WITH FORMSPREE) ===== -->
-            <form id="bookingForm" action="https://formspree.io/f/mdenvygn" method="POST">
-
+            <!-- ===== BOOKING FORM ===== -->
+            <form id="bookingForm">
                 <div class="booking-grid">
                     <div class="booking-step">
                         <span class="step-number">01</span>
@@ -806,18 +834,19 @@
 
                     <p class="response-note">I'll reach out within 48 hours to confirm your booking.</p>
 
-                    <button type="submit" class="btn-primary" id="confirmBooking">
+                    <button type="button" class="btn-primary" id="confirmBooking">
                         <i class="fas fa-envelope"></i> Confirm via Email →
                     </button>
                 </div>
-
-                <!-- ===== FORMSPREE HONEYPOT (SPAM PROTECTION) ===== -->
-                <input type="text" name="_gotcha" style="display:none" />
-
-                <!-- ===== REDIRECT AFTER SUBMIT ===== -->
-                <input type="hidden" name="_next" value="https://hamzatabduullahi-star.github.io/djack-studio/thankyou.html" />
-
             </form>
+
+            <!-- ===== SUCCESS MESSAGE ===== -->
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <h2>Booking Confirmed!</h2>
+                <p>Your booking request has been sent successfully. I'll reach out within 48 hours to confirm your appointment.</p>
+            </div>
+
         </div>
     </section>
 
@@ -828,6 +857,13 @@
     </footer>
 
     <script>
+        // ===== INITIALIZE EMAILJS =====
+        (function() {
+            emailjs.init({
+                publicKey: "gqnxaY1L4Gh9_3zlL",
+            });
+        })();
+
         // ===== HAMBURGER MENU =====
         const hamburger = document.getElementById('hamburger');
         const mobileNav = document.getElementById('mobileNav');
@@ -991,7 +1027,60 @@
             }
         }
 
-        console.log('🔥 Djack booking page loaded with Formspree!');
+        // ===== CONFIRM BOOKING → EMAILJS =====
+        const confirmBtn = document.getElementById('confirmBooking');
+        const successMessage = document.getElementById('successMessage');
+        const bookingForm = document.getElementById('bookingForm');
+
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', function() {
+                if (!this.classList.contains('active')) return;
+
+                // Get form values
+                const name = document.getElementById('clientName')?.value.trim() || 'Not provided';
+                const email = document.getElementById('clientEmail')?.value.trim() || 'Not provided';
+                const phone = document.getElementById('clientPhone')?.value.trim() || 'Not provided';
+                const placement = document.getElementById('selectedPlacement')?.value || 'Not specified';
+                const size = document.getElementById('tattooSize')?.value || 'Not specified';
+                const date = document.getElementById('preferredDate')?.value || 'Not specified';
+                const recap = document.getElementById('ideaRecap')?.value.trim() || 'No details provided';
+                const payment = document.getElementById('selectedPayment')?.value || 'Not specified';
+
+                // Loading state
+                confirmBtn.textContent = 'Sending...';
+                confirmBtn.disabled = true;
+                confirmBtn.style.opacity = '0.7';
+
+                // Send via EmailJS
+                emailjs.send('service_acy93fj', 'template_ojg5nza', {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    placement: placement,
+                    size: size,
+                    date: date,
+                    recap: recap,
+                    payment_method: payment,
+                })
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    // Show success message
+                    bookingForm.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('Something went wrong. Please try again or contact us directly.');
+                    // Reset button
+                    confirmBtn.innerHTML = '<i class="fas fa-envelope"></i> Confirm via Email →';
+                    confirmBtn.disabled = false;
+                    confirmBtn.style.opacity = '1';
+                });
+            });
+        }
+
+        console.log('🔥 Djack booking page loaded with EmailJS!');
     </script>
 </body>
 </html>
