@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Djack – Book a Session</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #ffffff;
+            line-height: 1.7;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(1.5px 1.5px at 10% 15%, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1.5px 1.5px at 25% 40%, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1.5px 1.5px at 40% 8%, rgba(255, 255, 255, 0.5), transparent),
+                radial-gradient(1.5px 1.5px at 55% 65%, rgba(255, 255, 255, 0.2), transparent),
+                radial-gradient(1.5px 1.5px at 70% 25%, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1.5px 1.5px at 85% 75%, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1.5px 1.5px at 15% 85%, rgba(255, 255, 255, 0.25), transparent),
+                radial-gradient(1.5px 1.5px at 50% 50%, rgba(255, 255, 255, 0.15), transparent),
+                radial-gradient(1.5px 1.5px at 65% 12%, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(1.5px 1.5px at 90% 50%, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1.5px 1.5px at 5% 55%, rgba(255, 255, 255, 0.25), transparent),
+                radial-gradient(1.5px 1.5px at 75% 88%, rgba(255, 255, 255, 0.2), transparent),
+                radial-gradient(2px 2px at 20% 45%, rgba(245, 158, 11, 0.3), transparent),
+                radial-gradient(2px 2px at 60% 35%, rgba(245, 158, 11, 0.25), transparent),
+                radial-gradient(2px 2px at 80% 65%, rgba(245, 158, 11, 0.3), transparent),
+                radial-gradient(2px 2px at 30% 90%, rgba(245, 158, 11, 0.2), transparent),
+                radial-gradient(2px 2px at 70% 10%, rgba(245, 158, 11, 0.25), transparent),
+                radial-gradient(2px 2px at 50% 70%, rgba(245, 158, 11, 0.2), transparent);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+            transition: all 0.3s;
+        }
+        .header.scrolled {
+            padding: 12px 0;
+            background: rgba(15, 23, 42, 0.98);
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo a {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        .logo a span {
+            color: #f59e0b;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .nav a {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            transition: width 0.3s;
+        }
+        .nav a:hover::after,
+        .nav a.active::after {
+            width: 100%;
+        }
+        .nav a:hover {
+            color: #f59e0b;
+        }
+        .nav-cta {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a !important;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-weight: 600 !important;
+            transition: all 0.3s;
+        }
+        .nav-cta::after {
+            display: none !important;
+        }
+        .nav-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+            color: #0f172a !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 2.5px;
+            background: #f59e0b;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(12px);
+            padding: 100px 24px 40px;
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+        .mobile-nav.active {
+            display: flex;
+        }
+        .mobile-nav a {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            transition: color 0.3s;
+        }
+        .mobile-nav a:hover {
+            color: #f59e0b;
+        }
+        .mobile-nav .nav-cta-mobile {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a !important;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-weight: 600 !important;
+        }
+
+        .page-hero {
+            padding: 140px 0 60px;
+            text-align: center;
+            background: transparent;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.06);
+        }
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+        .page-hero h1 span {
+            color: #f59e0b;
+            font-style: italic;
+        }
+        .page-sub {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .booking-page {
+            padding: 60px 0 80px;
+            background: transparent;
+        }
+        .booking-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            max-width: 1000px;
+            margin: 0 auto 40px;
+        }
+        .booking-step {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(245, 158, 11, 0.06);
+            transition: all 0.3s;
+        }
+        .booking-step:hover {
+            border-color: rgba(245, 158, 11, 0.15);
+            transform: translateY(-2px);
+        }
+        .step-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: rgba(245, 158, 11, 0.3);
+            letter-spacing: 3px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .booking-step h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(245, 158, 11, 0.08);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: rgba(245, 158, 11, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.05);
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.15);
+        }
+        .form-group select option {
+            background: #0f172a;
+            color: #ffffff;
+        }
+        .form-group input[type="date"] {
+            color-scheme: dark;
+        }
+
+        .placement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .placement-btn {
+            padding: 8px 4px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(245, 158, 11, 0.08);
+            border-radius: 6px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.7rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .placement-btn:hover {
+            background: rgba(245, 158, 11, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .placement-btn.active {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.25);
+            color: #f59e0b;
+        }
+
+        .deposit-section {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(245, 158, 11, 0.06);
+        }
+        .deposit-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .deposit-section h2 span {
+            color: #f59e0b;
+        }
+        .deposit-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.8;
+            max-width: 650px;
+            margin: 0 auto 30px;
+        }
+        .deposit-desc strong {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .deposit-note {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-style: italic;
+            padding: 12px 20px;
+            background: rgba(245, 158, 11, 0.05);
+            border-radius: 8px;
+            display: inline-block;
+            border-left: 3px solid #f59e0b;
+        }
+        .deposit-note i {
+            color: #f59e0b;
+            margin-right: 8px;
+        }
+
+        .payment-methods {
+            text-align: left;
+        }
+        .payment-methods label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .payment-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .payment-btn {
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(245, 158, 11, 0.08);
+            border-radius: 30px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .payment-btn:hover {
+            background: rgba(245, 158, 11, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .payment-btn.active {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.25);
+            color: #f59e0b;
+        }
+
+        .terms-section {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .terms-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #ffffff;
+        }
+        .terms-section h2 span {
+            color: #f59e0b;
+        }
+        .terms-sub {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 32px;
+        }
+        .terms-content {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid rgba(245, 158, 11, 0.06);
+            margin-bottom: 32px;
+        }
+        .terms-content ol {
+            padding-left: 20px;
+            margin: 0 0 20px 0;
+        }
+        .terms-content ol li {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.8;
+        }
+        .terms-content ol li strong {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(245, 158, 11, 0.06);
+        }
+        .terms-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: #f59e0b;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .terms-checkbox label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        .signature-area {
+            text-align: left;
+            margin-bottom: 32px;
+        }
+        .signature-area label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .signature-hint {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 12px;
+        }
+        .signature-pad {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(245, 158, 11, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        #signatureCanvas {
+            display: block;
+            width: 100%;
+            height: 180px;
+            background: rgba(0, 0, 0, 0.3);
+            cursor: crosshair;
+            touch-action: none;
+        }
+        .btn-clear {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(245, 158, 11, 0.08);
+            border-radius: 6px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.6rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-clear:hover {
+            background: rgba(245, 158, 11, 0.08);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .response-note {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 24px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+            padding: 16px 48px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity: 0.4;
+            pointer-events: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.1);
+        }
+        .btn-primary::after {
+            content: ' →';
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+        .btn-primary.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .btn-primary.active:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+        }
+        .btn-primary.active:hover::after {
+            transform: translateX(4px);
+        }
+
+        .footer {
+            padding: 32px 0;
+            background: rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(245, 158, 11, 0.06);
+        }
+        .footer a {
+            color: #f59e0b;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .booking-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .booking-step {
+                padding: 24px;
+            }
+            .placement-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+            .placement-btn {
+                font-size: 0.6rem;
+                padding: 6px 4px;
+            }
+            .payment-grid {
+                justify-content: center;
+            }
+            .payment-btn {
+                padding: 8px 18px;
+                font-size: 0.7rem;
+            }
+            .terms-content {
+                padding: 20px;
+            }
+            #signatureCanvas {
+                height: 140px;
+            }
+            .btn-primary {
+                padding: 14px 32px;
+                font-size: 0.9rem;
+                width: 100%;
+                justify-content: center;
+            }
+            .deposit-section {
+                padding: 24px;
+            }
+        }
+        @media (max-width: 480px) {
+            .placement-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .page-hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header" id="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">D<span>jack</span></a>
+            </div>
+            <nav class="nav">
+                <a href="gallery.html">Gallery</a>
+                <a href="booking.html" class="nav-cta active">Book a session</a>
+            </nav>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html">Book a session</a>
+        <a href="aftercare.html">Aftercare</a>
+    </div>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1>Book a <span>Session</span></h1>
+            <p class="page-sub">Confirm your appointment.</p>
+        </div>
+    </section>
+
+    <section class="booking-page">
+        <div class="container">
+            <div class="booking-grid">
+                <div class="booking-step">
+                    <span class="step-number">01</span>
+                    <h3>You</h3>
+                    <div class="form-group">
+                        <label>FULL NAME</label>
+                        <input type="text" id="clientName" placeholder="Jane Doe" />
+                    </div>
+                    <div class="form-group">
+                        <label>EMAIL</label>
+                        <input type="email" id="clientEmail" placeholder="jane@example.com" />
+                    </div>
+                    <div class="form-group">
+                        <label>PHONE</label>
+                        <input type="tel" id="clientPhone" placeholder="+1 949-439-8195" />
+                    </div>
+                </div>
+
+                <div class="booking-step">
+                    <span class="step-number">02</span>
+                    <h3>Your appointment</h3>
+                    <div class="form-group">
+                        <label>PLACEMENT</label>
+                        <div class="placement-grid">
+                            <button class="placement-btn" data-value="Forearm">Forearm</button>
+                            <button class="placement-btn" data-value="Upper arm">Upper arm</button>
+                            <button class="placement-btn" data-value="Chest">Chest</button>
+                            <button class="placement-btn" data-value="Back">Back</button>
+                            <button class="placement-btn" data-value="Leg">Leg</button>
+                            <button class="placement-btn" data-value="Neck">Neck</button>
+                            <button class="placement-btn" data-value="Ribcage">Ribcage</button>
+                            <button class="placement-btn" data-value="Hand/finger">Hand/finger</button>
+                            <button class="placement-btn" data-value="Foot/ankle">Foot/ankle</button>
+                        </div>
+                        <input type="hidden" id="selectedPlacement" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label>APPROXIMATE SIZE</label>
+                        <select id="tattooSize">
+                            <option value="">Select a size</option>
+                            <option value="Small (2-4 inches)">Small (2-4 inches)</option>
+                            <option value="Medium (4-8 inches)">Medium (4-8 inches)</option>
+                            <option value="Large (8-12 inches)">Large (8-12 inches)</option>
+                            <option value="XL (12+ inches)">XL (12+ inches)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>PREFERRED DATE</label>
+                        <input type="date" id="preferredDate" />
+                    </div>
+                    <div class="form-group">
+                        <label>QUICK RECAP OF YOUR IDEA</label>
+                        <textarea id="ideaRecap" rows="3" placeholder="A short summary of what we already discussed..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deposit-section">
+                <h2>Secure your spot with a <span>50% deposit</span></h2>
+                <p class="deposit-desc">
+                    To secure your appointment, a <strong>50% non-refundable deposit</strong> is required at the time of booking. This deposit confirms your commitment and covers the time, preparation, and custom design work that goes into your piece.
+                </p>
+                <p class="deposit-desc" style="margin-top:-10px;">
+                    The deposit will be credited toward your final balance. In the event of a cancellation or rescheduling with less than <strong>48 hours' notice</strong>, the deposit is forfeited to compensate for the lost time and work already put into your design.
+                </p>
+                <div class="deposit-note">
+                    <i class="fas fa-exclamation-circle"></i> Please be sure of your availability before booking — this deposit is non-refundable.
+                </div>
+            </div>
+
+            <div class="deposit-section" style="margin-top:-20px;">
+                <div class="payment-methods">
+                    <label>PREFERRED PAYMENT METHOD</label>
+                    <div class="payment-grid">
+                        <button class="payment-btn" data-value="Zelle">Zelle</button>
+                        <button class="payment-btn" data-value="Apple Pay">Apple Pay</button>
+                        <button class="payment-btn" data-value="PayPal">PayPal</button>
+                        <button class="payment-btn" data-value="Chime">Chime</button>
+                        <button class="payment-btn" data-value="Bitcoin">Bitcoin</button>
+                    </div>
+                    <input type="hidden" id="selectedPayment" value="" />
+                </div>
+            </div>
+
+            <div class="terms-section">
+                <h2>Studio <span>Terms</span></h2>
+                <p class="terms-sub">Djack — quick terms.</p>
+                <div class="terms-content">
+                    <ol>
+                        <li>
+                            <strong>Deposit.</strong> A 50% non-refundable deposit is required to secure your appointment. This deposit will be credited toward your final cost. Cancellations with less than 48 hours' notice will result in forfeiture of the deposit.
+                        </li>
+                        <li style="margin-top:12px;">
+                            <strong>Design Changes.</strong> Any major design changes must be discussed at least 72 hours before your session. Last-minute changes may require rescheduling and a new deposit.
+                        </li>
+                        <li style="margin-top:12px;">
+                            <strong>Touch-ups.</strong> One free touch-up is included within 90 days of your session for any minor adjustments or fading.
+                        </li>
+                    </ol>
+                    <div class="terms-checkbox">
+                        <input type="checkbox" id="agreeTerms" />
+                        <label for="agreeTerms">I agree to the studio terms and confirm my info is accurate.</label>
+                    </div>
+                </div>
+
+                <div class="signature-area">
+                    <label>SIGN HERE</label>
+                    <p class="signature-hint">Sign with mouse, trackpad or finger.</p>
+                    <div class="signature-pad">
+                        <canvas id="signatureCanvas"></canvas>
+                        <button class="btn-clear" id="clearSignature">CLEAR</button>
+                    </div>
+                </div>
+
+                <p class="response-note">I'll reach out within 48 hours to confirm your booking.</p>
+
+                <button class="btn-primary" id="confirmBooking">
+                    <i class="fas fa-envelope"></i> Confirm via Email →
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Djack. All rights reserved. | <a href="mailto:almightydjack@gmail.com">almightydjack@gmail.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        const body = document.body;
+        const header = document.getElementById('header');
+
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        });
+
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                body.style.overflow = '';
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (mobileNav.classList.contains('active') &&
+                !mobileNav.contains(e.target) &&
+                !hamburger.contains(e.target)) {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                body.style.overflow = '';
+            }
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Placement buttons
+        const placementBtns = document.querySelectorAll('.placement-btn');
+        const selectedPlacement = document.getElementById('selectedPlacement');
+
+        placementBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                placementBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                if (selectedPlacement) {
+                    selectedPlacement.value = this.dataset.value;
+                }
+            });
+        });
+
+        // Payment method buttons
+        const paymentBtns = document.querySelectorAll('.payment-btn');
+        const selectedPayment = document.getElementById('selectedPayment');
+
+        paymentBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                paymentBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                if (selectedPayment) {
+                    selectedPayment.value = this.dataset.value;
+                }
+            });
+        });
+
+        // Signature pad
+        const canvas = document.getElementById('signatureCanvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+
+            function resizeCanvas() {
+                const rect = canvas.getBoundingClientRect();
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+                ctx.lineWidth = 2.5;
+                ctx.strokeStyle = '#f59e0b';
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            function getPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: (clientX - rect.left) * (canvas.width / rect.width),
+                    y: (clientY - rect.top) * (canvas.height / rect.height)
+                };
+            }
+
+            function startDraw(e) {
+                e.preventDefault();
+                isDrawing = true;
+                const pos = getPos(e);
+                lastX = pos.x;
+                lastY = pos.y;
+            }
+
+            function draw(e) {
+                e.preventDefault();
+                if (!isDrawing) return;
+                const pos = getPos(e);
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                lastX = pos.x;
+                lastY = pos.y;
+                checkSignature();
+            }
+
+            function endDraw(e) {
+                e.preventDefault();
+                isDrawing = false;
+            }
+
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', endDraw);
+            canvas.addEventListener('mouseleave', endDraw);
+            canvas.addEventListener('touchstart', startDraw);
+            canvas.addEventListener('touchmove', draw);
+            canvas.addEventListener('touchend', endDraw);
+
+            document.getElementById('clearSignature').addEventListener('click', function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                checkSignature();
+            });
+
+            function checkSignature() {
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const pixels = imageData.data;
+                let hasDrawing = false;
+                for (let i = 3; i < pixels.length; i += 4) {
+                    if (pixels[i] > 0) {
+                        hasDrawing = true;
+                        break;
+                    }
+                }
+                const agree = document.getElementById('agreeTerms');
+                const confirmBtn = document.getElementById('confirmBooking');
+                if (agree && confirmBtn) {
+                    if (hasDrawing && agree.checked) {
+                        confirmBtn.classList.add('active');
+                    } else {
+                        confirmBtn.classList.remove('active');
+                    }
+                }
+            }
+
+            const agreeTerms = document.getElementById('agreeTerms');
+            if (agreeTerms) {
+                agreeTerms.addEventListener('change', checkSignature);
+            }
+
+            // ===== CONFIRM BOOKING → GMAIL =====
+            const confirmBtn = document.getElementById('confirmBooking');
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', function() {
+                    if (!this.classList.contains('active')) return;
+
+                    const name = document.getElementById('clientName')?.value.trim() || 'Not provided';
+                    const email = document.getElementById('clientEmail')?.value.trim() || 'Not provided';
+                    const phone = document.getElementById('clientPhone')?.value.trim() || 'Not provided';
+                    const placement = document.getElementById('selectedPlacement')?.value || 'Not specified';
+                    const size = document.getElementById('tattooSize')?.value || 'Not specified';
+                    const date = document.getElementById('preferredDate')?.value || 'Not specified';
+                    const recap = document.getElementById('ideaRecap')?.value.trim() || 'No details provided';
+                    const payment = document.getElementById('selectedPayment')?.value || 'Not specified';
+
+                    const subject = `New Booking Request - Djack Studio`;
+                    const body = `✅ FINAL BOOKING CONFIRMATION - Djack%0A%0A` +
+                        `📝 CLIENT DETAILS:%0A` +
+                        `Name: ${name}%0A` +
+                        `Email: ${email}%0A` +
+                        `Phone: ${phone}%0A%0A` +
+                        `🎨 APPOINTMENT DETAILS:%0A` +
+                        `Placement: ${placement}%0A` +
+                        `Size: ${size}%0A` +
+                        `Preferred Date: ${date}%0A%0A` +
+                        `💡 Idea Recap:%0A${recap}%0A%0A` +
+                        `💳 Payment Method: ${payment}%0A` +
+                        `✍️ Signature: [Drawn on website]%0A%0A` +
+                        `💰 Deposit: 50% non-refundable required%0A` +
+                        `⏰ 48-hour cancellation policy applies.%0A%0A` +
+                        `Please confirm availability and send payment details. Thanks!`;
+
+                    window.location.href = `mailto:almightydjack@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                });
+            }
+        }
+
+        console.log('🔥 Djack booking page loaded!');
+    </script>
+</body>
+</html>
