@@ -59,7 +59,6 @@
             color: inherit;
         }
 
-        /* ===== HEADER ===== */
         .header {
             position: fixed;
             top: 0;
@@ -580,16 +579,25 @@
             transform: translateX(4px);
         }
 
-        .footer {
-            padding: 32px 0;
-            background: rgba(0, 0, 0, 0.3);
-            text-align: center;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.2);
-            border-top: 1px solid rgba(245, 158, 11, 0.06);
+        /* ===== BACK TO HOMEPAGE BUTTON ===== */
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.15);
         }
-        .footer a {
-            color: #f59e0b;
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
         }
 
         /* ===== SUCCESS MESSAGE ===== */
@@ -616,6 +624,18 @@
         }
         .success-message p {
             color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer {
+            padding: 32px 0;
+            background: rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(245, 158, 11, 0.06);
+        }
+        .footer a {
+            color: #f59e0b;
         }
 
         @media (max-width: 768px) {
@@ -655,6 +675,12 @@
             }
             .btn-primary {
                 padding: 14px 32px;
+                font-size: 0.9rem;
+                width: 100%;
+                justify-content: center;
+            }
+            .btn-home {
+                padding: 12px 24px;
                 font-size: 0.9rem;
                 width: 100%;
                 justify-content: center;
@@ -840,11 +866,14 @@
                 </div>
             </form>
 
-            <!-- ===== SUCCESS MESSAGE ===== -->
+            <!-- ===== SUCCESS MESSAGE WITH BACK BUTTON ===== -->
             <div class="success-message" id="successMessage">
                 <i class="fas fa-check-circle"></i>
                 <h2>Booking Confirmed!</h2>
                 <p>Your booking request has been sent successfully. I'll reach out within 48 hours to confirm your appointment.</p>
+                <a href="index.html" class="btn-home">
+                    <i class="fas fa-arrow-left"></i> Back to Homepage
+                </a>
             </div>
 
         </div>
